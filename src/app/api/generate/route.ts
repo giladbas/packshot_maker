@@ -65,21 +65,21 @@ export async function POST(req: NextRequest) {
     // Build generation config
     const generationConfig: Record<string, unknown> = {
       responseModalities: ['TEXT', 'IMAGE'],
-      imageSizeOptions: {
+      imageConfig: {
         aspectRatio: aspectRatio || '1:1',
       },
     };
+
+    // Add thinking config inside generationConfig
+    if (thinkingLevel === 'high') {
+      generationConfig.thinkingConfig = { thinkingBudget: 8192 };
+    }
 
     // Build the Gemini API request
     const geminiBody: Record<string, unknown> = {
       contents: [{ parts }],
       generationConfig,
     };
-
-    // Add thinking config
-    if (thinkingLevel === 'high') {
-      geminiBody.thinkingConfig = { thinkingBudget: 8192 };
-    }
 
     // Add tools for web search
     if (webSearch) {
