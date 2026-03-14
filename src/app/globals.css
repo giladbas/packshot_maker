@@ -1,0 +1,98 @@
+@import "tailwindcss";
+
+:root,
+[data-theme="light"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f5f5;
+  --bg-tertiary: #e5e5e5;
+  --fg-primary: #0a0a0a;
+  --fg-secondary: #525252;
+  --fg-muted: #a3a3a3;
+  --border: #e5e5e5;
+  --accent: #4f46e5;
+  --accent-hover: #4338ca;
+  --accent-muted: #e0e7ff;
+  --danger: #ef4444;
+  --success: #22c55e;
+  --card-bg: #ffffff;
+  --input-bg: #f5f5f5;
+  --shimmer-from: #e5e5e5;
+  --shimmer-to: #f5f5f5;
+}
+
+[data-theme="dark"] {
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #141414;
+  --bg-tertiary: #1f1f1f;
+  --fg-primary: #ededed;
+  --fg-secondary: #a3a3a3;
+  --fg-muted: #525252;
+  --border: #262626;
+  --accent: #6366f1;
+  --accent-hover: #818cf8;
+  --accent-muted: #1e1b4b;
+  --danger: #ef4444;
+  --success: #22c55e;
+  --card-bg: #141414;
+  --input-bg: #1f1f1f;
+  --shimmer-from: #1f1f1f;
+  --shimmer-to: #262626;
+}
+
+@theme inline {
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-bg-tertiary: var(--bg-tertiary);
+  --color-fg-primary: var(--fg-primary);
+  --color-fg-secondary: var(--fg-secondary);
+  --color-fg-muted: var(--fg-muted);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-muted: var(--accent-muted);
+  --color-danger: var(--danger);
+  --color-success: var(--success);
+  --color-card-bg: var(--card-bg);
+  --color-input-bg: var(--input-bg);
+  --color-shimmer-from: var(--shimmer-from);
+  --color-shimmer-to: var(--shimmer-to);
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--fg-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, var(--shimmer-from) 25%, var(--shimmer-to) 50%, var(--shimmer-from) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: -1px;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
