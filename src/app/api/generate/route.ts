@@ -65,21 +65,21 @@ export async function POST(req: NextRequest) {
     // Build generation config
     const generationConfig: Record<string, unknown> = {
       responseModalities: ['TEXT', 'IMAGE'],
-      imageSizeOptions: {
+      imageConfig: {
         aspectRatio: aspectRatio || '1:1',
       },
     };
+
+    // Add thinking config inside generationConfig (Gemini 3.x uses thinkingLevel, not thinkingBudget)
+    if (thinkingLevel === 'high') {
+      generationConfig.thinkingConfig = { thinkingLevel: 'high' };
+    }
 
     // Build the Gemini API request
     const geminiBody: Record<string, unknown> = {
       contents: [{ parts }],
       generationConfig,
     };
-
-    // Add thinking config
-    if (thinkingLevel === 'high') {
-      geminiBody.thinkingConfig = { thinkingBudget: 8192 };
-    }
 
     // Add tools for web search
     if (webSearch) {
@@ -92,7 +92,7 @@ export async function POST(req: NextRequest) {
 
     const promises = Array.from({ length: calls }, () =>
       fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${settings.gemini_api_key}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-image-preview:generateContent?key=${settings.gemini_api_key}`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
